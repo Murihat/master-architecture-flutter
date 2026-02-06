@@ -24,31 +24,28 @@ class AttendanceBlocView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AttendanceBloc(sl<TakePhotoUseCase>(), sl<SubmitAttendanceUseCase>()),
-      child: BlocBuilder<AttendanceBloc, AttendanceState>(
-        builder: (context, state) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (state is AttendanceLoading) const CircularProgressIndicator(),
-                if (state is AttendanceReady) Text('Foto: ${state.imagePath}'),
-                if (state is AttendanceError)
-                  Text(state.message, style: const TextStyle(color: Colors.red)),
-                ElevatedButton(
-                  onPressed: () => context.read<AttendanceBloc>().add(TakePhotoEvent()),
-                  child: const Text('Ambil Foto'),
-                ),
-                ElevatedButton(
-                  onPressed: () => context.read<AttendanceBloc>().add(SubmitAttendanceEvent()),
-                  child: const Text('Submit'),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+    return BlocBuilder<AttendanceBloc, AttendanceState>(
+      builder: (context, state) {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (state is AttendanceLoading) const CircularProgressIndicator(),
+              if (state is AttendanceReady) Text('Foto: ${state.imagePath}'),
+              if (state is AttendanceError)
+                Text(state.message, style: const TextStyle(color: Colors.red)),
+              ElevatedButton(
+                onPressed: () => context.read<AttendanceBloc>().add(TakePhotoEvent()),
+                child: const Text('Ambil Foto'),
+              ),
+              ElevatedButton(
+                onPressed: () => context.read<AttendanceBloc>().add(SubmitAttendanceEvent()),
+                child: const Text('Submit'),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
